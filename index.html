@@ -1,0 +1,221 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inscription des étudiants | ESEF</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 25px 15px;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #eaf1fb, #f8faff);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 100%;
+  max-width: 480px;
+  background: white;
+  padding: 30px 25px;
+  border-radius: 18px;
+  box-shadow: 0 8px 35px rgba(20,50,90,.10);
+  text-align: center;
+}
+
+.logo {
+  display: block;
+  width: 100%;
+  max-width: 380px;
+  height: auto;
+  object-fit: contain;
+  margin: 0 auto 25px;
+}
+
+h1 {
+  color: #173c78;
+  font-size: 24px;
+  margin-bottom: 12px;
+}
+
+.welcome {
+  color: #555;
+  line-height: 1.7;
+  font-size: 15px;
+  margin-bottom: 25px;
+}
+
+.divider {
+  height: 3px;
+  width: 55px;
+  background: #d3a943;
+  margin: 0 auto 25px;
+  border-radius: 5px;
+}
+
+form { text-align: left; }
+
+label {
+  display: block;
+  color: #263b5a;
+  font-weight: bold;
+  margin: 18px 0 8px;
+}
+
+input {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #d5dce8;
+  border-radius: 9px;
+  font-size: 16px;
+  outline: none;
+}
+
+input:focus {
+  border-color: #28559a;
+  box-shadow: 0 0 0 3px #28559a18;
+}
+
+button {
+  width: 100%;
+  padding: 15px;
+  margin-top: 25px;
+  background: #173c78;
+  color: white;
+  border: none;
+  border-radius: 9px;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:disabled { opacity: .6; }
+
+#success {
+  display: none;
+  padding: 22px 12px;
+  margin-top: 20px;
+  background: #edf8f0;
+  border-radius: 12px;
+  color: #176536;
+  line-height: 1.8;
+}
+
+#status {
+  color: #a33;
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.footer {
+  border-top: 1px solid #eee;
+  margin-top: 28px;
+  padding-top: 18px;
+  color: #777;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.footer strong { color: #173c78; }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <img src="./logo.png"
+       class="logo"
+       alt="Logo de l'établissement"
+       onerror="this.style.display='none'; document.getElementById('logoError').style.display='block';">
+
+  <div id="logoError" style="display:none;color:#a33;font-size:12px;">
+    Logo non trouvé : vérifiez le fichier logo.png sur GitHub.
+  </div>
+
+  <h1>Bienvenue !</h1>
+
+  <p class="welcome">
+    Chers étudiants,<br>
+    Nous vous invitons à remplir le formulaire ci-dessous
+    afin de procéder à votre inscription.<br>
+    Merci de vérifier l'exactitude des informations fournies.
+  </p>
+
+  <div class="divider"></div>
+
+  <form id="registrationForm"
+    action="https://script.google.com/macros/s/AKfycbwdO4_B_uuLRwVYAkoNtgM3U1BdpEOTTxLgaBpK6wM1E0pcWoypWgw9uSpQXV-oonyc6Q/exec"
+    method="POST"
+    target="submitFrame">
+
+    <label for="name">Nom et prénom</label>
+    <input id="name" name="name"
+      type="text" placeholder="Entrez votre nom complet" required>
+
+    <label for="phone">Numéro de téléphone</label>
+    <input id="phone" name="phone"
+      type="tel" inputmode="tel"
+      placeholder="Entrez votre numéro" required>
+
+    <button id="submitBtn" type="submit">
+      Envoyer mon inscription
+    </button>
+  </form>
+
+  <div id="success">
+    <h2>Merci pour votre inscription !</h2>
+    <p>
+      Votre demande a été envoyée avec succès.<br>
+      Nous vous remercions pour votre confiance.
+    </p>
+  </div>
+
+  <div id="status" role="status"></div>
+
+  <iframe name="submitFrame" id="submitFrame"
+    style="display:none"></iframe>
+
+  <div class="footer">
+    Pour toute information complémentaire,<br>
+    veuillez contacter <strong>Amina</strong>.<br>
+    Merci de votre collaboration.
+  </div>
+
+</div>
+
+<script>
+const form = document.getElementById("registrationForm");
+const frame = document.getElementById("submitFrame");
+const button = document.getElementById("submitBtn");
+const status = document.getElementById("status");
+const success = document.getElementById("success");
+
+let waiting = false;
+
+form.addEventListener("submit", function() {
+  waiting = true;
+  button.disabled = true;
+  status.textContent = "Envoi de votre inscription...";
+});
+
+frame.addEventListener("load", function() {
+  if (!waiting) return;
+
+  waiting = false;
+  form.style.display = "none";
+  status.textContent = "";
+  success.style.display = "block";
+});
+</script>
+
+</body>
+</html>
